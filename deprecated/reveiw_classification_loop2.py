@@ -62,7 +62,8 @@ relativePath = os.getcwd()
 sentencePath = relativePath + "/data/sample1_sentences_08062018.csv"
 sentences = pd.read_csv(sentencePath, index_col = "Sentence#")
 print(sentences.columns)
-sentences = sentences[list(sentences.columns.values)[0:4]+["Sentence"]]
+sentences = sentences[['Wireless Setup', 'Wireless Connectivity', 'Windows Compatibility',
+       'Overall Print Quality', 'Ink Consumption', "Sentence"]]
 numberOfClasses = len(sentences.columns)-1
 #print(sentences.tail(4))
 print("classes selected", sentences.columns[0:-1])
@@ -150,7 +151,7 @@ def Run_Models(lstm_units, hidden_units, activation):
 
     x= model.fit(X_train, y_train,
               batch_size=256,
-              epochs=20,
+              epochs=30,
               validation_data=(X_val, y_val),
               shuffle = True,
               verbose = 1
@@ -166,8 +167,8 @@ def Run_Models(lstm_units, hidden_units, activation):
 Results = [("lstm-units", "hidden-units", "activation-function", "accuracy", "precision", "recall", "f1")]
 with open('results/' + str(numberOfClasses) + '_result.txt', 'w') as f:
     f.write('%s %s %s %s %s %s %s\n' % Results[0])
-for lstm_units in [32,64,128,256,512]:
-    for hidden_units in [0, 50, 100, 200, 300, 500, 1000, 1500, 2000]:
+for lstm_units in [128,256]:
+    for hidden_units in [0, 250, 500]:
         for activation in ['relu', 'tanh']:
             result = Run_Models(lstm_units,hidden_units,activation)
             Results.append((lstm_units,hidden_units,activation, result))

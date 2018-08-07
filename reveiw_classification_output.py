@@ -60,9 +60,10 @@ def plot_model_performance(train_loss, train_acc, train_val_loss, train_val_acc,
 
 relativePath = os.getcwd()
 sentencePath = relativePath + "/data/sample1_sentences_08062018.csv"
-sentences = pd.read_csv(sentencePath, index_col = "Sentence#")
+sentences = pd.read_csv(sentencePath, index_col="Sentence#")
 print(sentences.columns)
-sentences = sentences[list(sentences.columns.values)[0:3]+["Sentence"]]
+sentences = sentences[['Wireless Setup', 'Wireless Connectivity', 'Windows Compatibility',
+       'Overall Print Quality', 'Ink Consumption', "Sentence"]]
 numberOfClasses = len(sentences.columns)-1
 #print(sentences.tail(4))
 print("classes selected", sentences.columns[0:-1])
@@ -72,40 +73,46 @@ w2vmodel = Word2Vec.load("word2vec.model")
 print("vector size used in w2v: ",w2vmodel.vector_size)
 path = "Results/08062018-"+ str(numberOfClasses)+"/"
 
-multilabel = []
-sent_token_list = []
+# split data into train and test
+train, test = train_test_split(sentences, test_size=TEST_SPLIT,random_state=CUSTOM_SEED + 10)
+
+print(len(test))
+
 word2int = {}
 counter = -1
-for index, row in sentences.iterrows():
-    tokens = nltk.word_tokenize(row["Sentence"])
-    tokenstoIDs = []
-    for token in tokens:
-        if token not in word2int:
-            counter += 1
-            word2int[token] = counter
-        tokenstoIDs.append(word2int[token])
-    if len(tokenstoIDs) <= MAX_SEQUENCE_LENGTH:
-        sent_token_list.append(tokenstoIDs)
-        multilabel.append(list(row[0:numberOfClasses].values))
+
+def prepare_inputs(df, word2int, counter, sent_token_list, multilabel):
+    dropped = []
+    for index, row in df.iterrows():
+        tokens = nltk.word_tokenize(row["Sentence"])
+        tokenstoIDs = []
+        for token in tokens:
+            if token not in word2int:
+                counter += 1
+                word2int[token] = counter
+            tokenstoIDs.append(word2int[token])
+        if len(tokenstoIDs) <= MAX_SEQUENCE_LENGTH:
+            sent_token_list.append(tokenstoIDs)
+            multilabel.append(list(row[0:numberOfClasses].values))
+        else:
+            dropped.append(index)
+    X = np.array(sent_token_list)
+    y = np.array(multilabel)
+    X = pad_sequences(X, maxlen=MAX_SEQUENCE_LENGTH)
+    return X, y, word2int, counter,dropped
+
+(X,y,word2int,counter,not_used) = prepare_inputs(train, word2int,counter,[],[])
+(X_test,y_test,word2int,counter,dropped) = prepare_inputs(test, word2int,counter,[],[])
 print('size of volcabulary: ',len(word2int))
-X = np.array(sent_token_list)
-y = np.array(multilabel)
-#print(type(X),X.shape, X[0:3])
-#print(type(y),y.shape,y[0:3])
-#print(len([len(l) for l in sent_token_list if len(l)>MAX_SEQUENCE_LENGTH]))
-print("total number of sentences kept: ", len(X))
 
-#padding 0s infront to make it same size
-X = pad_sequences(X, maxlen=MAX_SEQUENCE_LENGTH)
-
-
-X, y = shuffle(X, y)
-
-# split data into train and test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SPLIT,random_state=CUSTOM_SEED)
+print(type(dropped[0]))
+print(dropped)
+print(test.index)
+test.drop(dropped, axis=0, inplace=True)
+print(len(test))
 
 # split training data into train and validation
-X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=VALIDATION_SPLIT, random_state=1)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=VALIDATION_SPLIT, random_state=CUSTOM_SEED)
 
 n_train_samples = X_train.shape[0]
 n_val_samples = X_val.shape[0]
@@ -114,8 +121,6 @@ n_test_samples = X_test.shape[0]
 print('We have %d TRAINING samples' % n_train_samples)
 print('We have %d VALIDATION samples' % n_val_samples)
 print('We have %d TEST samples' % n_test_samples)
-
-
 
 # + 1 to include the unkown word
 embedding_matrix = np.random.random((len(word2int) + 1, w2vmodel.vector_size))
@@ -137,8 +142,8 @@ embedding_layer = Embedding(len(word2int) + 1,
                             trainable=True)
 
 model.add(embedding_layer)
-model.add(Bidirectional(LSTM(64, return_sequences=False)))
-model.add(Dense(500, activation='tanh'))
+model.add(Bidirectional(LSTM(128, return_sequences=False)))
+model.add(Dense(500, activation='relu'))
 model.add(Dense(numberOfClasses, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy',
@@ -148,39 +153,42 @@ model.compile(loss='binary_crossentropy',
 print("model fitting - Bidirectional LSTM")
 model.summary()
 
-#earlystopper = EarlyStopping(monitor='val_acc', patience=5, verbose=1)
-#callbacks=[earlystopper]
 
 x= model.fit(X_train, y_train,
           batch_size=256,
-          epochs=15,
-          validation_data=(X_val, y_val),
+          epochs=10,
+          validation_data = (X_val, y_val),
           shuffle = True,
           verbose = 1
           )
 
-# if not os.path.exists(path):
-#     print('MAKING DIRECTORY to save model file')
-#     os.makedirs(path)
-#
-# plot_model_performance(
-#     train_loss=x.history.get('loss', []),
-#     train_acc=x.history.get('acc', []),
-#     train_val_loss=x.history.get('val_loss', []),
-#     train_val_acc=x.history.get('val_acc', []),
-#     save_figure_path = path +'model_performance.png'
-# )
-#
-# # Visualize model architecture
-# plot_model(model, to_file=path +'model_structure.png', show_shapes=True)
+if not os.path.exists(path):
+    print('MAKING DIRECTORY to save model file')
+    os.makedirs(path)
+
+plot_model_performance(
+    train_loss=x.history.get('loss', []),
+    train_acc=x.history.get('acc', []),
+    train_val_loss=x.history.get('val_loss', []),
+    train_val_acc=x.history.get('val_acc', []),
+    save_figure_path = path +'model_performance.png'
+)
+
+# Visualize model architecture
+#plot_model(model, to_file=path +'model_structure.png', show_shapes=True)
 
 preds = model.predict(X_test)
+preds[preds>=0.5] = int(1)
+preds[preds<0.5] = int(0)
+predd = pd.DataFrame(preds, columns=["p1","p2","p3","p4","p5"], index=test.index)
+re = pd.concat([test,predd], axis=1)
+re.to_csv(path + 'predicted_result.csv')
 
-
+y_test = test[test.columns[0:-1]].values
+print("poitwise accuracy", np.sum(preds == y_test)/(preds.shape[0]*preds.shape[1]))
 print ("f1: ", f1_score(y_test, preds, average='weighted'))
 print ("accuracy: ", accuracy_score(y_test, preds))
 print ("precision: ", precision_score(y_test, preds, average='weighted'))
 print ("recall: ", recall_score(y_test, preds, average='weighted'))
-print ("precision_recall_fscore_support: ", precision_recall_fscore_support(y_test, preds, average='weighted'))
-
+#print ("precision_recall_fscore_support: ", precision_recall_fscore_support(y_test, preds, average='weighted'))
 print("see results in " + path)
