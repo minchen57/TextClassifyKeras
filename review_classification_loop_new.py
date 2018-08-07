@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import nltk
 import pandas as pd
 import numpy as np
@@ -62,9 +64,8 @@ relativePath = os.getcwd()
 sentencePath = relativePath + "/data/sample1_sentences_08062018.csv"
 sentences = pd.read_csv(sentencePath, index_col = "Sentence#")
 print(sentences.columns)
-sentences = sentences[list(sentences.columns.values)[0:3]+["Sentence"]]
+sentences = sentences[list(sentences.columns.values)[0:5]+["Sentence"]]
 numberOfClasses = len(sentences.columns)-1
-#print(sentences.tail(4))
 print("classes selected", sentences.columns[0:-1])
 print("number of classes/labels: ", numberOfClasses)
 print("total number of sentences: ", len(sentences))
@@ -116,7 +117,6 @@ print('We have %d VALIDATION samples' % n_val_samples)
 print('We have %d TEST samples' % n_test_samples)
 
 
-
 # + 1 to include the unkown word
 embedding_matrix = np.random.random((len(word2int) + 1, w2vmodel.vector_size))
 
@@ -129,58 +129,53 @@ for word in word2int:
 print('Embedding matrix shape', embedding_matrix.shape)
 print('X_train shape', X_train.shape)
 
-model = Sequential()
-embedding_layer = Embedding(len(word2int) + 1,
-                            w2vmodel.vector_size,
-                            weights=[embedding_matrix],
-                            input_length=MAX_SEQUENCE_LENGTH,
-                            trainable=True)
+def Run_Models(lstm_units, hidden_units, activation):
+    model = Sequential()
+    embedding_layer = Embedding(len(word2int) + 1,
+                                w2vmodel.vector_size,
+                                weights=[embedding_matrix],
+                                input_length=MAX_SEQUENCE_LENGTH,
+                                trainable=True)
 
-model.add(embedding_layer)
-model.add(Bidirectional(LSTM(64, return_sequences=False)))
-model.add(Dense(500, activation='tanh'))
-model.add(Dense(numberOfClasses, activation='sigmoid'))
+    model.add(embedding_layer)
+    model.add(Bidirectional(LSTM(lstm_units, return_sequences=False)))
+    if hidden_units > 0:
+        model.add(Dense(hidden_units, activation=activation))
+    model.add(Dense(numberOfClasses, activation='sigmoid'))
+    model.compile(loss='binary_crossentropy',
+                  optimizer='rmsprop',
+                  metrics=['acc'])
+    print("model fitting - Bidirectional LSTM")
+    model.summary()
 
-model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
-              metrics=['acc'])
+    x= model.fit(X_train, y_train,
+              batch_size=256,
+              epochs=40,
+              validation_data=(X_val, y_val),
+              shuffle = True,
+              verbose = 1
+              )
 
-print("model fitting - Bidirectional LSTM")
-model.summary()
+    preds = model.predict(X_test)
+    preds[preds>=0.5] = 1
+    preds[preds<0.5] = 0
+    paccuracy =np.sum(preds == y_test) / (preds.shape[0] * preds.shape[1])
 
-#earlystopper = EarlyStopping(monitor='val_acc', patience=5, verbose=1)
-#callbacks=[earlystopper]
+    return (paccuracy, accuracy_score(y_test, preds), precision_score(y_test, preds, average='weighted'),
+            recall_score(y_test, preds, average='weighted'),f1_score(y_test, preds, average='weighted'))
 
-x= model.fit(X_train, y_train,
-          batch_size=256,
-          epochs=15,
-          validation_data=(X_val, y_val),
-          shuffle = True,
-          verbose = 1
-          )
+Results = [("lstm-units", "hidden-units", "activation-function",
+            "point-wise accuracy","accuracy", "precision", "recall", "f1")]
+with open('results/' + str(numberOfClasses) + '_result.txt', 'w') as f:
+    f.write('%s %s %s %s %s %s %s %s\n' % Results[0])
+for lstm_units in [128,256,512]:
+    for hidden_units in [0, 250, 500, 1000]:
+        for activation in ['relu', 'tanh']:
+            result = Run_Models(lstm_units,hidden_units,activation)
+            Results.append((lstm_units,hidden_units,activation, result))
+            with open('results/'+str(numberOfClasses)+'_result.txt', 'a') as f:
+                f.write('%s %s %s ' % (lstm_units,hidden_units,activation))
+                f.write('%s %s %s %s %s\n' % result)
+            print(result)
 
-# if not os.path.exists(path):
-#     print('MAKING DIRECTORY to save model file')
-#     os.makedirs(path)
-#
-# plot_model_performance(
-#     train_loss=x.history.get('loss', []),
-#     train_acc=x.history.get('acc', []),
-#     train_val_loss=x.history.get('val_loss', []),
-#     train_val_acc=x.history.get('val_acc', []),
-#     save_figure_path = path +'model_performance.png'
-# )
-#
-# # Visualize model architecture
-# plot_model(model, to_file=path +'model_structure.png', show_shapes=True)
-
-preds = model.predict(X_test)
-
-
-print ("f1: ", f1_score(y_test, preds, average='weighted'))
-print ("accuracy: ", accuracy_score(y_test, preds))
-print ("precision: ", precision_score(y_test, preds, average='weighted'))
-print ("recall: ", recall_score(y_test, preds, average='weighted'))
-print ("precision_recall_fscore_support: ", precision_recall_fscore_support(y_test, preds, average='weighted'))
-
-print("see results in " + path)
+print(Results)
