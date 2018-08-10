@@ -18,7 +18,6 @@ from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_sc
 
 # PARAMETERS ================
 MAX_SEQUENCE_LENGTH = 100
-CUSTOM_SEED = 42
 TEST_SPLIT = 0.2
 VALIDATION_SPLIT = 0.25
 
@@ -102,80 +101,72 @@ X = pad_sequences(X, maxlen=MAX_SEQUENCE_LENGTH)
 
 X, y = shuffle(X, y)
 
-# split data into train and test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SPLIT,random_state=CUSTOM_SEED)
 
-# split training data into train and validation
-X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=VALIDATION_SPLIT, random_state=1)
-
-n_train_samples = X_train.shape[0]
-n_val_samples = X_val.shape[0]
-n_test_samples = X_test.shape[0]
-
-print('We have %d TRAINING samples' % n_train_samples)
-print('We have %d VALIDATION samples' % n_val_samples)
-print('We have %d TEST samples' % n_test_samples)
-
-
-# + 1 to include the unkown word
-embedding_matrix = np.random.random((len(word2int) + 1, w2vmodel.vector_size))
-
-for word in word2int:
-    embedding_vector = token2vec(word,w2vmodel)
-    if embedding_vector is not None:
-        # words not found in embeddings_index will remain unchanged and thus will be random.
-        embedding_matrix[word2int[word]] = embedding_vector
-
-print('Embedding matrix shape', embedding_matrix.shape)
-print('X_train shape', X_train.shape)
-
-def Run_Models(lstm_units, hidden_units, activation):
+def Run_Models(lstm_units, hidden_units, activation, X_train, y_train, X_test, y_test, X_val, y_val):
     model = Sequential()
-    embedding_layer = Embedding(len(word2int) + 1,
-                                w2vmodel.vector_size,
-                                weights=[embedding_matrix],
-                                input_length=MAX_SEQUENCE_LENGTH,
-                                trainable=True)
+    embedding_layer = Embedding(len(word2int) + 1, w2vmodel.vector_size, weights=[embedding_matrix],
+                                input_length=MAX_SEQUENCE_LENGTH, trainable=True)
 
     model.add(embedding_layer)
     model.add(Bidirectional(LSTM(lstm_units, return_sequences=False)))
     if hidden_units > 0:
         model.add(Dense(hidden_units, activation=activation))
     model.add(Dense(numberOfClasses, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy',
-                  optimizer='rmsprop',
-                  metrics=['acc'])
+    model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['acc'])
     print("model fitting - Bidirectional LSTM")
     model.summary()
 
-    x= model.fit(X_train, y_train,
-              batch_size=256,
-              epochs=40,
-              validation_data=(X_val, y_val),
-              shuffle = True,
-              verbose = 1
-              )
+    x = model.fit(X_train, y_train, batch_size=256, epochs=50,
+                  validation_data=(X_val, y_val), shuffle=True, verbose=1)
 
     preds = model.predict(X_test)
-    preds[preds>=0.5] = 1
-    preds[preds<0.5] = 0
-    paccuracy =np.sum(preds == y_test) / (preds.shape[0] * preds.shape[1])
+    preds[preds >= 0.5] = 1
+    preds[preds < 0.5] = 0
+    paccuracy = np.sum(preds == y_test) / (preds.shape[0] * preds.shape[1])
 
     return (paccuracy, accuracy_score(y_test, preds), precision_score(y_test, preds, average='weighted'),
-            recall_score(y_test, preds, average='weighted'),f1_score(y_test, preds, average='weighted'))
+            recall_score(y_test, preds, average='weighted'), f1_score(y_test, preds, average='weighted'))
 
-Results = [("lstm-units", "hidden-units", "activation-function",
-            "point-wise accuracy","accuracy", "precision", "recall", "f1")]
-with open('results/' + str(numberOfClasses) + '_result.txt', 'w') as f:
-    f.write('%s %s %s %s %s %s %s %s\n' % Results[0])
-for lstm_units in [128,256,512]:
-    for hidden_units in [0, 250, 500, 1000]:
-        for activation in ['relu']:
-            result = Run_Models(lstm_units,hidden_units,activation)
-            Results.append((lstm_units,hidden_units,activation, result))
-            with open('results/'+str(numberOfClasses)+'_result.txt', 'a') as f:
-                f.write('%s %s %s ' % (lstm_units,hidden_units,activation))
-                f.write('%s %s %s %s %s\n' % result)
-            print(result)
+
+Results = [("seed","lstm-units", "hidden-units", "activation-function", "point-wise accuracy", "accuracy", "precision",
+                "recall", "f1")]
+with open('results/' + str(numberOfClasses) + '_result_cross.txt', 'w') as f:
+    f.write('%s %s %s %s %s %s %s %s %s\n' % Results[0])
+
+for seed in range(10):
+    # split data into train and test
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SPLIT, random_state=seed)
+
+    # split training data into train and validation
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=VALIDATION_SPLIT, random_state=1)
+
+    n_train_samples = X_train.shape[0]
+    n_val_samples = X_val.shape[0]
+    n_test_samples = X_test.shape[0]
+
+    print('We have %d TRAINING samples' % n_train_samples)
+    print('We have %d VALIDATION samples' % n_val_samples)
+    print('We have %d TEST samples' % n_test_samples)
+
+    # + 1 to include the unkown word
+    embedding_matrix = np.random.random((len(word2int) + 1, w2vmodel.vector_size))
+
+    for word in word2int:
+        embedding_vector = token2vec(word, w2vmodel)
+        if embedding_vector is not None:
+            # words not found in embeddings_index will remain unchanged and thus will be random.
+            embedding_matrix[word2int[word]] = embedding_vector
+
+    print('Embedding matrix shape', embedding_matrix.shape)
+    print('X_train shape', X_train.shape)
+
+    result = Run_Models(512, 1000, "relu", X_train, y_train, X_test, y_test, X_val, y_val)
+    Results.append((seed, 512, 1000, "relu", result))
+    with open('results/' + str(numberOfClasses) + '_result_cross.txt', 'a') as f:
+        f.write('%s %s %s %s' % (seed, 512, 1000, "relu"))
+        f.write('%s %s %s %s %s\n' % result)
+    print(result)
 
 print(Results)
+
+
