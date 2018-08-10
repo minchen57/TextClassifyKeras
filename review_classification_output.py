@@ -61,11 +61,10 @@ def plot_model_performance(train_loss, train_acc, train_val_loss, train_val_acc,
 
 
 relativePath = os.getcwd()
-sentencePath = relativePath + "/data/sample1_sentences_08062018.csv"
+sentencePath = relativePath + "/data/sample2_sentences_08082018.csv"
 sentences = pd.read_csv(sentencePath, index_col="Sentence#")
 print(sentences.columns)
-sentences = sentences[['Wireless Setup', 'Wireless Connectivity', 'Windows Compatibility',
-       'Overall Print Quality', 'Ink Consumption', "Sentence"]]
+sentences = sentences[list(sentences.columns.values)[0:21]+["Sentence"]]
 numberOfClasses = len(sentences.columns)-1
 #print(sentences.tail(4))
 print("classes selected", sentences.columns[0:-1])
@@ -73,7 +72,7 @@ print("number of classes/labels: ", numberOfClasses)
 print("total number of sentences: ", len(sentences))
 w2vmodel = Word2Vec.load("word2vec.model")
 print("vector size used in w2v: ",w2vmodel.vector_size)
-path = "Results/08062018-"+ str(numberOfClasses)+"/"
+path = "Results/08082018-"+ str(numberOfClasses)+"/"
 
 # split data into train and test
 train, test = train_test_split(sentences, test_size=TEST_SPLIT,random_state=CUSTOM_SEED + 10)
@@ -144,8 +143,8 @@ embedding_layer = Embedding(len(word2int) + 1,
                             trainable=True)
 
 model.add(embedding_layer)
-model.add(Bidirectional(LSTM(128, return_sequences=False)))
-model.add(Dense(500, activation='relu'))
+model.add(Bidirectional(LSTM(512, return_sequences=False)))
+model.add(Dense(1000, activation='relu'))
 model.add(Dense(numberOfClasses, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy',
@@ -158,7 +157,7 @@ model.summary()
 
 x= model.fit(X_train, y_train,
           batch_size=256,
-          epochs=10,
+          epochs=50,
           validation_data = (X_val, y_val),
           shuffle = True,
           verbose = 1
@@ -179,10 +178,13 @@ plot_model_performance(
 # Visualize model architecture
 #plot_model(model, to_file=path +'model_structure.png', show_shapes=True)
 
-preds = model.predict(X_test)
+preds = model.predict(X_test, verbose=1)
 preds[preds>=0.5] = int(1)
 preds[preds<0.5] = int(0)
-predd = pd.DataFrame(preds, columns=["p1","p2","p3","p4","p5"], index=test.index)
+columns = []
+for col in sentences.columns[0:-1]:
+    columns.append(col+"_predicted")
+predd = pd.DataFrame(preds, columns=columns, index=test.index)
 re = pd.concat([test,predd], axis=1)
 re.to_csv(path + 'predicted_result.csv')
 
