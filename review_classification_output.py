@@ -18,10 +18,13 @@ from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_sc
 
 # PARAMETERS ================
 MAX_SEQUENCE_LENGTH = 100
-CUSTOM_SEED = 42
+CUSTOM_SEED = 43
 TEST_SPLIT = 0.2
 VALIDATION_SPLIT = 0.25
 
+def cal_test_baseline(df):
+    df1 = df[df.columns[0:-1]]
+    return (1 - df1.sum().sum()/(len(df1)*len(df1.columns)))
 
 def token2vec(token,w2vmodel):
     return w2vmodel.wv[token]
@@ -61,18 +64,18 @@ def plot_model_performance(train_loss, train_acc, train_val_loss, train_val_acc,
 
 
 relativePath = os.getcwd()
-sentencePath = relativePath + "/data/sample2_sentences_08082018.csv"
+sentencePath = relativePath + "/data/sample4_sentences_08102018.csv"
 sentences = pd.read_csv(sentencePath, index_col="Sentence#")
 print(sentences.columns)
-sentences = sentences[list(sentences.columns.values)[0:21]+["Sentence"]]
+sentences = sentences[list(sentences.columns.values)[0:-2]+["Sentence"]]
 numberOfClasses = len(sentences.columns)-1
 #print(sentences.tail(4))
-print("classes selected", sentences.columns[0:-1])
+print("classes selected", sentences.columns[0:-2])
 print("number of classes/labels: ", numberOfClasses)
 print("total number of sentences: ", len(sentences))
 w2vmodel = Word2Vec.load("word2vec.model")
 print("vector size used in w2v: ",w2vmodel.vector_size)
-path = "Results/08082018-"+ str(numberOfClasses)+"/"
+path = "Results/08102018-"+ str(numberOfClasses)+"/"
 
 # split data into train and test
 train, test = train_test_split(sentences, test_size=TEST_SPLIT,random_state=CUSTOM_SEED + 10)
@@ -157,7 +160,7 @@ model.summary()
 
 x= model.fit(X_train, y_train,
           batch_size=256,
-          epochs=50,
+          epochs=40,
           validation_data = (X_val, y_val),
           shuffle = True,
           verbose = 1
@@ -189,6 +192,7 @@ re = pd.concat([test,predd], axis=1)
 re.to_csv(path + 'predicted_result.csv')
 
 y_test = test[test.columns[0:-1]].values
+print("baseline point-wise acc: ", cal_test_baseline(test))
 print("poitwise accuracy", np.sum(preds == y_test)/(preds.shape[0]*preds.shape[1]))
 print ("f1: ", f1_score(y_test, preds, average='weighted'))
 print ("accuracy: ", accuracy_score(y_test, preds))

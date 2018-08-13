@@ -61,17 +61,17 @@ def plot_model_performance(train_loss, train_acc, train_val_loss, train_val_acc,
 
 
 relativePath = os.getcwd()
-sentencePath = relativePath + "/data/sample2_sentences_08082018.csv"
+sentencePath = relativePath + "/data/sample4_sentences_08102018.csv"
 sentences = pd.read_csv(sentencePath, index_col = "Sentence#")
 print(sentences.columns)
-sentences = sentences[list(sentences.columns.values)[0:21]+["Sentence"]]
+sentences = sentences[list(sentences.columns.values)[0:-2]+["Sentence"]]
 numberOfClasses = len(sentences.columns)-1
 print("classes selected", sentences.columns[0:-1])
 print("number of classes/labels: ", numberOfClasses)
 print("total number of sentences: ", len(sentences))
 w2vmodel = Word2Vec.load("word2vec.model")
 print("vector size used in w2v: ",w2vmodel.vector_size)
-path = "Results/08062018-"+ str(numberOfClasses)+"/"
+path = "Results/08102018-"+ str(numberOfClasses)+"/"
 
 multilabel = []
 sent_token_list = []
@@ -150,7 +150,7 @@ def Run_Models(lstm_units, hidden_units, activation):
 
     x= model.fit(X_train, y_train,
               batch_size=256,
-              epochs=40,
+              epochs=60,
               validation_data=(X_val, y_val),
               shuffle = True,
               verbose = 1
@@ -168,8 +168,8 @@ Results = [("lstm-units", "hidden-units", "activation-function",
             "point-wise accuracy","accuracy", "precision", "recall", "f1")]
 with open('results/' + str(numberOfClasses) + '_result.txt', 'w') as f:
     f.write('%s %s %s %s %s %s %s %s\n' % Results[0])
-for lstm_units in [128,256,512]:
-    for hidden_units in [0, 250, 500, 1000]:
+for lstm_units in [256, 512, 1024, 2048]:
+    for hidden_units in [0,1000, 1500, 2000]:
         for activation in ['relu']:
             result = Run_Models(lstm_units,hidden_units,activation)
             Results.append((lstm_units,hidden_units,activation, result))
