@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 relativePath = os.getcwd()
-path = relativePath + "/Results/08082018-21/"
+path = relativePath + "/Results/08132018-278/"
 
 df = pd.read_csv(path+"predicted_result.csv", index_col="Sentence#")
 jump = int((len(df.columns)+1)/2)
@@ -31,8 +31,12 @@ for j in range(jump-1):
                 noyes+=1
             else:
                 nono+=1
-    total = yesyes+yesno+noyes+nono
-    values.append([df.columns[j],total,yesyes,yesno,noyes,nono, yesyes/total, yesno/total, noyes/total, nono/total])
+    total = yesyes+yesno
+    if total != 0:
+        values.append([df.columns[j],total,yesyes,yesno,noyes,nono, yesyes/total, nono/total, noyes/total, yesno/total])
+    else:
+        values.append([df.columns[j], total, yesyes, yesno, noyes, nono, "NA", "NA","NA","NA"])
 
-result = pd.DataFrame(values, columns=["subtopic", "Total","YesYes", "YesNo", "NoYes", "NoNo", "YesYes%", "YesNo%", "NoYes%", "NoNo%"])
+result = pd.DataFrame(values, columns=["subtopic", "Total","YesYes", "YesNo", "NoYes", "NoNo",
+                                       "TruePositive%", "TrueNegative%", "FalsePositive%", "FalseNegative%"])
 result.to_csv(path + 'predicted_result_summary.csv')

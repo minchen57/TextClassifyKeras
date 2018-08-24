@@ -64,7 +64,7 @@ def plot_model_performance(train_loss, train_acc, train_val_loss, train_val_acc,
 
 
 relativePath = os.getcwd()
-sentencePath = relativePath + "/data/sample4_sentences_08102018.csv"
+sentencePath = relativePath + "/data/sample5_sentences_08132018.csv"
 sentences = pd.read_csv(sentencePath, index_col="Sentence#")
 print(sentences.columns)
 sentences = sentences[list(sentences.columns.values)[0:-2]+["Sentence"]]
@@ -75,7 +75,7 @@ print("number of classes/labels: ", numberOfClasses)
 print("total number of sentences: ", len(sentences))
 w2vmodel = Word2Vec.load("word2vec.model")
 print("vector size used in w2v: ",w2vmodel.vector_size)
-path = "Results/08102018-"+ str(numberOfClasses)+"/"
+path = "Results/08132018-"+ str(numberOfClasses)+"/"
 
 # split data into train and test
 train, test = train_test_split(sentences, test_size=TEST_SPLIT,random_state=CUSTOM_SEED + 10)
@@ -160,7 +160,7 @@ model.summary()
 
 x= model.fit(X_train, y_train,
           batch_size=256,
-          epochs=22,
+          epochs=60,
           validation_data = (X_val, y_val),
           shuffle = True,
           verbose = 1
