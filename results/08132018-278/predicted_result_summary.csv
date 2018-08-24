@@ -1,0 +1,6 @@
+,subtopic,Total,YesYes,YesNo,NoYes,NoNo,YesYes%,YesNo%,NoYes%,NoNo%
+0,Data Transfer/Transmission/Wireless Range-SA/Positive,1518,0,1,0,1517,0.0,0.0006587615283267457,0.0,0.9993412384716732
+1,Data Transfer/Transmission/Wireless Range-SA/Negative,1518,0,2,0,1516,0.0,0.0013175230566534915,0.0,0.9986824769433466
+2,Data Transfer/Transmission/Wireless Range-SA/Neutral,1518,0,1,0,1517,0.0,0.0006587615283267457,0.0,0.9993412384716732
+3,Data Transfer/Transmission/Cloud Connectivity-SA/Positive,1518,0,15,0,1503,0.0,0.009881422924901186,0.0,0.9901185770750988
+4,Data Transfer/Transmission/Cloud Connectivity-SA/Negative,1518,0,12,0,1506,0.0,0.007905138339920948,0.0,0.9920948616600791
