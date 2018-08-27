@@ -64,18 +64,18 @@ def plot_model_performance(train_loss, train_acc, train_val_loss, train_val_acc,
 
 
 relativePath = os.getcwd()
-sentencePath = relativePath + "/data/sample5_sentences_08132018.csv"
+sentencePath = relativePath + "/data/sample2_sentences_08082018.csv"
 sentences = pd.read_csv(sentencePath, index_col="Sentence#")
 print(sentences.columns)
-sentences = sentences[list(sentences.columns.values)[0:-2]+["Sentence"]]
+sentences = sentences[list(sentences.columns.values)[4:5]+["Sentence"]]
 numberOfClasses = len(sentences.columns)-1
 #print(sentences.tail(4))
-print("classes selected", sentences.columns[0:-2])
+print("classes selected", sentences.columns[0:-1])
 print("number of classes/labels: ", numberOfClasses)
 print("total number of sentences: ", len(sentences))
 w2vmodel = Word2Vec.load("word2vec.model")
 print("vector size used in w2v: ",w2vmodel.vector_size)
-path = "Results/08132018-"+ str(numberOfClasses)+"/"
+path = "Results/08082018-"+ str(numberOfClasses)+"/"
 
 # split data into train and test
 train, test = train_test_split(sentences, test_size=TEST_SPLIT,random_state=CUSTOM_SEED + 10)
@@ -147,7 +147,7 @@ embedding_layer = Embedding(len(word2int) + 1,
 
 model.add(embedding_layer)
 model.add(Bidirectional(LSTM(512, return_sequences=False)))
-model.add(Dense(1000, activation='relu'))
+model.add(Dense(1500, activation='relu'))
 model.add(Dense(numberOfClasses, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy',
@@ -160,7 +160,7 @@ model.summary()
 
 x= model.fit(X_train, y_train,
           batch_size=256,
-          epochs=60,
+          epochs=12,
           validation_data = (X_val, y_val),
           shuffle = True,
           verbose = 1

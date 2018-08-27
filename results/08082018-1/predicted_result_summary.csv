@@ -1,0 +1,2 @@
+,subtopic,TotalGroundTruth,YesYes,YesNo,NoYes,NoNo,Recall,Precision,FalsePositive%,FalseNegative%
+0,Paper Feed,81,35,46,8,1307,0.43209876543209874,0.813953488372093,0.18604651162790697,0.5679012345679012

@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 relativePath = os.getcwd()
-path = relativePath + "/Results/08082018-21/"
+path = relativePath + "/Results/08082018-1/"
 
 df = pd.read_csv(path+"predicted_result.csv", index_col="Sentence#")
 jump = int((len(df.columns)+1)/2)
