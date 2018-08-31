@@ -1,0 +1,4 @@
+,subtopic,TotalGroundTruth,YesYes,YesNo,NoYes,NoNo,Recall,Precision,FalsePositive%,FalseNegative%
+0,Overall Print Quality,121,0,121,0,1275,NA,NA,NA,NA
+1,Color Print Quality,46,0,46,0,1350,NA,NA,NA,NA
+2,Monochrome Print Quality,32,0,32,0,1364,NA,NA,NA,NA

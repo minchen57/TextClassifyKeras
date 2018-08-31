@@ -64,15 +64,15 @@ def plot_model_performance(train_loss, train_acc, train_val_loss, train_val_acc,
     plt.close(fig)
 
 def runScript(a,b,epoch, sentences):
-    sentences = sentences[['Overall Print Quality', 'Color Print Quality', 'Monochrome Print Quality',"Sentence"]]
-    #sentences = sentences[list(sentences.columns.values)[a:b]+["Sentence"]]
+    #sentences = sentences[['Overall Print Quality', 'Color Print Quality', 'Monochrome Print Quality',"Sentence"]]
+    sentences = sentences[list(sentences.columns.values)[0:-1]+["Sentence"]]
     numberOfClasses = len(sentences.columns)-1
     print("classes selected", sentences.columns[0:-1])
     print("number of classes/labels: ", numberOfClasses)
     print("total number of sentences: ", len(sentences))
     w2vmodel = Word2Vec.load("word2vec.model")
     print("vector size used in w2v: ",w2vmodel.vector_size)
-    path = "Results/print_quality_test-08082018-"+ "printquality/"+"LSTM-"+str(a)+"hidden-"+str(b)+"-"
+    path = "Results/08082018-21-detailed/"+"LSTM-"+str(a)+"hidden-"+str(b)+"/"
 
     # split data into train and test
     train, test = train_test_split(sentences, test_size=TEST_SPLIT,random_state=CUSTOM_SEED + 10)
@@ -231,7 +231,9 @@ relativePath = os.getcwd()
 sentencePath = relativePath + "/data/sample2_sentences_08082018.csv"
 sentences = pd.read_csv(sentencePath, index_col="Sentence#")
 print(sentences.columns)
-for a in [512]:
-    for b in [250, 500, 1000]:
-        runScript(a, b, 40, sentences)
-
+for a in [128, 256, 512, 1024, 2048]:
+    for b in [50, 250, 500, 1000, 1500]:
+        if a+b > 2000:
+            runScript(a, b, 50, sentences)
+        else:
+            runScript(a, b, 40, sentences)
