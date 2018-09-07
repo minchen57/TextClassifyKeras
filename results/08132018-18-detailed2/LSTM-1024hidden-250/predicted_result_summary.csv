@@ -1,0 +1,20 @@
+,subtopic,TotalGroundTruth,YesYes,YesNo,NoYes,NoNo,Recall,Precision,FalsePositive%,FalseNegative%
+0,Data Transfer/Transmission/Wireless Range-SA/Positive,1,0,1,0,1517,NA,NA,NA,NA
+1,Data Transfer/Transmission/Wireless Range-SA/Negative,2,0,2,0,1516,NA,NA,NA,NA
+2,Data Transfer/Transmission/Wireless Range-SA/Neutral,1,0,1,0,1517,NA,NA,NA,NA
+3,Data Transfer/Transmission/Cloud Connectivity-SA/Positive,15,0,15,0,1503,NA,NA,NA,NA
+4,Data Transfer/Transmission/Cloud Connectivity-SA/Negative,12,0,12,0,1506,NA,NA,NA,NA
+5,Data Transfer/Transmission/Cloud Connectivity-SA/Neutral,12,2,10,9,1497,0.16666666666666666,0.18181818181818182,0.8181818181818182,0.8333333333333334
+6,Data Transfer/Transmission/Wireless Connectivity-SA/Positive,45,0,45,0,1473,NA,NA,NA,NA
+7,Data Transfer/Transmission/Wireless Connectivity-SA/Negative,94,61,33,79,1345,0.648936170212766,0.4357142857142857,0.5642857142857143,0.35106382978723405
+8,Data Transfer/Transmission/Wireless Connectivity-SA/Neutral,100,41,59,41,1377,0.41,0.5,0.5,0.59
+9,Data Transfer/Transmission/Wireless Setup-SA/Positive,60,28,32,4,1454,0.4666666666666667,0.875,0.125,0.5333333333333333
+10,Data Transfer/Transmission/Wireless Setup-SA/Negative,27,0,27,11,1480,0.0,0.0,1.0,1.0
+11,Data Transfer/Transmission/Wireless Setup-SA/Neutral,100,47,53,46,1372,0.47,0.5053763440860215,0.4946236559139785,0.53
+12,Data Transfer/Transmission/Data Transfer Error-SA/Positive,0,0,0,0,1518,NA,NA,NA,NA
+13,Data Transfer/Transmission/Data Transfer Error-SA/Negative,19,1,18,33,1466,0.05263157894736842,0.029411764705882353,0.9705882352941176,0.9473684210526315
+14,Data Transfer/Transmission/Data Transfer Error-SA/Neutral,1,0,1,0,1517,NA,NA,NA,NA
+15,Body/Design/Ergonomics -SA/Positive,4,0,4,0,1514,NA,NA,NA,NA
+16,Body/Design/Ergonomics -SA/Negative,5,1,4,2,1511,0.2,0.3333333333333333,0.6666666666666666,0.8
+17,Body/Design/Ergonomics -SA/Neutral,3,0,3,0,1515,NA,NA,NA,NA
+18,Overall,501,181,320,225,26598,0.36127744510978044,0.4458128078817734,0.5541871921182266,0.6387225548902196

@@ -1,0 +1,20 @@
+,subtopic,TotalGroundTruth,YesYes,YesNo,NoYes,NoNo,Recall,Precision,FalsePositive%,FalseNegative%
+0,Data Transfer/Transmission/Wireless Range-SA/Positive,1,0,1,0,1517,NA,NA,NA,NA
+1,Data Transfer/Transmission/Wireless Range-SA/Negative,2,0,2,0,1516,NA,NA,NA,NA
+2,Data Transfer/Transmission/Wireless Range-SA/Neutral,1,0,1,0,1517,NA,NA,NA,NA
+3,Data Transfer/Transmission/Cloud Connectivity-SA/Positive,15,4,11,3,1500,0.26666666666666666,0.5714285714285714,0.42857142857142855,0.7333333333333333
+4,Data Transfer/Transmission/Cloud Connectivity-SA/Negative,12,1,11,1,1505,0.08333333333333333,0.5,0.5,0.9166666666666666
+5,Data Transfer/Transmission/Cloud Connectivity-SA/Neutral,12,7,5,6,1500,0.5833333333333334,0.5384615384615384,0.46153846153846156,0.4166666666666667
+6,Data Transfer/Transmission/Wireless Connectivity-SA/Positive,45,11,34,11,1462,0.24444444444444444,0.5,0.5,0.7555555555555555
+7,Data Transfer/Transmission/Wireless Connectivity-SA/Negative,94,27,67,8,1416,0.2872340425531915,0.7714285714285715,0.22857142857142856,0.7127659574468085
+8,Data Transfer/Transmission/Wireless Connectivity-SA/Neutral,100,51,49,46,1372,0.51,0.5257731958762887,0.4742268041237113,0.49
+9,Data Transfer/Transmission/Wireless Setup-SA/Positive,60,15,45,2,1456,0.25,0.8823529411764706,0.11764705882352941,0.75
+10,Data Transfer/Transmission/Wireless Setup-SA/Negative,27,8,19,12,1479,0.2962962962962963,0.4,0.6,0.7037037037037037
+11,Data Transfer/Transmission/Wireless Setup-SA/Neutral,100,10,90,10,1408,0.1,0.5,0.5,0.9
+12,Data Transfer/Transmission/Data Transfer Error-SA/Positive,0,0,0,0,1518,NA,NA,NA,NA
+13,Data Transfer/Transmission/Data Transfer Error-SA/Negative,19,1,18,7,1492,0.05263157894736842,0.125,0.875,0.9473684210526315
+14,Data Transfer/Transmission/Data Transfer Error-SA/Neutral,1,0,1,0,1517,NA,NA,NA,NA
+15,Body/Design/Ergonomics -SA/Positive,4,0,4,0,1514,NA,NA,NA,NA
+16,Body/Design/Ergonomics -SA/Negative,5,2,3,1,1512,0.4,0.6666666666666666,0.3333333333333333,0.6
+17,Body/Design/Ergonomics -SA/Neutral,3,0,3,0,1515,NA,NA,NA,NA
+18,Overall,501,137,364,107,26716,0.27345309381237526,0.5614754098360656,0.4385245901639344,0.7265469061876247

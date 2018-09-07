@@ -64,7 +64,7 @@ relativePath = os.getcwd()
 sentencePath = relativePath + "/data/sample4_sentences_08102018.csv"
 sentences = pd.read_csv(sentencePath, index_col = "Sentence#")
 print(sentences.columns)
-sentences = sentences[list(sentences.columns.values)[0:-2]+["Sentence"]]
+sentences = sentences[list(sentences.columns.values)[0:-1]+["Sentence"]]
 numberOfClasses = len(sentences.columns)-1
 print("classes selected", sentences.columns[0:-1])
 print("number of classes/labels: ", numberOfClasses)

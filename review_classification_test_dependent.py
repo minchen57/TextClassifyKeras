@@ -65,14 +65,14 @@ def plot_model_performance(train_loss, train_acc, train_val_loss, train_val_acc,
 
 def runScript(a,b,epoch, sentences):
     #sentences = sentences[['Overall Print Quality', 'Color Print Quality', 'Monochrome Print Quality',"Sentence"]]
-    sentences = sentences[list(sentences.columns.values)[0:-1]+["Sentence"]]
+    sentences = sentences[list(sentences.columns.values)[0:18]+["Sentence"]]
     numberOfClasses = len(sentences.columns)-1
     print("classes selected", sentences.columns[0:-1])
     print("number of classes/labels: ", numberOfClasses)
     print("total number of sentences: ", len(sentences))
     w2vmodel = Word2Vec.load("word2vec.model")
     print("vector size used in w2v: ",w2vmodel.vector_size)
-    path = "Results/08082018-21-detailed/"+"LSTM-"+str(a)+"hidden-"+str(b)+"/"
+    path = "Results/08132018-18-detailed2/"+"LSTM-"+str(a)+"hidden-"+str(b)+"/"
 
     # split data into train and test
     train, test = train_test_split(sentences, test_size=TEST_SPLIT,random_state=CUSTOM_SEED + 10)
@@ -181,6 +181,15 @@ def runScript(a,b,epoch, sentences):
     preds = model.predict(X_test, verbose=1)
     preds[preds>=0.5] = int(1)
     preds[preds<0.5] = int(0)
+
+    y_test = test[test.columns[0:-1]].values
+    print("baseline point-wise acc: ", cal_test_baseline(test))
+    print("poitwise accuracy", np.sum(preds == y_test) / (preds.shape[0] * preds.shape[1]))
+    print("f1: ", f1_score(y_test, preds, average='weighted'))
+    print("accuracy: ", accuracy_score(y_test, preds))
+    print("precision: ", precision_score(y_test, preds, average='weighted'))
+    print("recall: ", recall_score(y_test, preds, average='weighted'))
+
     columns = []
     for col in sentences.columns[0:-1]:
         columns.append(col+"_predicted")
@@ -188,6 +197,10 @@ def runScript(a,b,epoch, sentences):
     df = pd.concat([test,predd], axis=1)
     jump = int((len(df.columns)+1)/2)
     values=[]
+    Yesyes= 0
+    Yesno = 0
+    Noyes = 0
+    Nono = 0
     for j in range(jump-1):
         yesyes=0
         yesno=0
@@ -206,34 +219,34 @@ def runScript(a,b,epoch, sentences):
                     noyes+=1
                 else:
                     nono+=1
+
         total = yesyes+yesno
+
+        Yesyes += yesyes
+        Yesno += yesno
+        Noyes += noyes
+        Nono += nono
         if (total != 0) and (yesyes+noyes != 0):
             values.append([df.columns[j],total,yesyes,yesno,noyes,nono, yesyes/total, yesyes/(yesyes+noyes), noyes/(yesyes+noyes), yesno/total])
         else:
             values.append([df.columns[j], total, yesyes, yesno, noyes, nono, "NA", "NA","NA","NA"])
+    Total = Yesyes + Yesno
+    values.append(["Overall",Total,Yesyes,Yesno,Noyes,Nono, Yesyes/Total, Yesyes/(Yesyes+Noyes), Noyes/(Yesyes+Noyes), Yesno/Total])
 
     result = pd.DataFrame(values, columns=["subtopic", "TotalGroundTruth","YesYes", "YesNo", "NoYes", "NoNo",
                                            "Recall", "Precision", "FalsePositive%", "FalseNegative%"])
     result.to_csv(path + 'predicted_result_summary.csv')
 
-    y_test = test[test.columns[0:-1]].values
-    print("baseline point-wise acc: ", cal_test_baseline(test))
-    print("poitwise accuracy", np.sum(preds == y_test)/(preds.shape[0]*preds.shape[1]))
-    print ("f1: ", f1_score(y_test, preds, average='weighted'))
-    print ("accuracy: ", accuracy_score(y_test, preds))
-    print ("precision: ", precision_score(y_test, preds, average='weighted'))
-    print ("recall: ", recall_score(y_test, preds, average='weighted'))
-    #print ("precision_recall_fscore_support: ", precision_recall_fscore_support(y_test, preds, average='weighted'))
     print("see results in " + path)
 
 
 relativePath = os.getcwd()
-sentencePath = relativePath + "/data/sample2_sentences_08082018.csv"
+sentencePath = relativePath + "/data/sample5_sentences_08132018.csv"
 sentences = pd.read_csv(sentencePath, index_col="Sentence#")
 print(sentences.columns)
-for a in [128, 256, 512, 1024, 2048]:
-    for b in [50, 250, 500, 1000, 1500]:
-        if a+b > 2000:
-            runScript(a, b, 50, sentences)
+for a in [512,1024]:
+    for b in [50, 250, 500, 1000]:
+        if a+b > 700:
+            runScript(a, b, 25, sentences)
         else:
-            runScript(a, b, 40, sentences)
+            runScript(a, b, 20, sentences)

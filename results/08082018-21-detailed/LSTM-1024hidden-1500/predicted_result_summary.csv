@@ -1,0 +1,22 @@
+,subtopic,TotalGroundTruth,YesYes,YesNo,NoYes,NoNo,Recall,Precision,FalsePositive%,FalseNegative%
+0,Wireless Setup,225,0,225,0,1171,NA,NA,NA,NA
+1,Wireless Connectivity,241,0,241,0,1155,NA,NA,NA,NA
+2,Windows Compatibility,132,0,132,0,1264,NA,NA,NA,NA
+3,Selling Price,84,0,84,0,1312,NA,NA,NA,NA
+4,Paper Feed,81,0,81,0,1315,NA,NA,NA,NA
+5,Overall Print Quality,121,0,121,0,1275,NA,NA,NA,NA
+6,Non-specific/Unknown,109,0,109,0,1287,NA,NA,NA,NA
+7,iOS Compatibility,105,0,105,0,1291,NA,NA,NA,NA
+8,Ink Consumption,123,0,123,0,1273,NA,NA,NA,NA
+9,Competitor Product Comparison,87,0,87,0,1309,NA,NA,NA,NA
+10,Audible Noise,90,0,90,0,1306,NA,NA,NA,NA
+11,Overall Customer Service,76,0,76,0,1320,NA,NA,NA,NA
+12,Cloud Connectivity,44,0,44,0,1352,NA,NA,NA,NA
+13,Paper Jam,31,0,31,0,1365,NA,NA,NA,NA
+14,Color Print Quality,46,0,46,0,1350,NA,NA,NA,NA
+15,Monochrome Print Quality,32,0,32,0,1364,NA,NA,NA,NA
+16,Build Quality,78,0,78,0,1318,NA,NA,NA,NA
+17,Print Speed,49,0,49,0,1347,NA,NA,NA,NA
+18,CD/DVD Printing,8,0,8,0,1388,NA,NA,NA,NA
+19,Initialization Speed,70,0,70,0,1326,NA,NA,NA,NA
+20,Driver Performance,46,0,46,0,1350,NA,NA,NA,NA

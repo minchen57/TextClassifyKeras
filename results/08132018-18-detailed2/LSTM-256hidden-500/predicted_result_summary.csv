@@ -1,0 +1,20 @@
+,subtopic,TotalGroundTruth,YesYes,YesNo,NoYes,NoNo,Recall,Precision,FalsePositive%,FalseNegative%
+0,Data Transfer/Transmission/Wireless Range-SA/Positive,1,0,1,0,1517,NA,NA,NA,NA
+1,Data Transfer/Transmission/Wireless Range-SA/Negative,2,0,2,0,1516,NA,NA,NA,NA
+2,Data Transfer/Transmission/Wireless Range-SA/Neutral,1,0,1,0,1517,NA,NA,NA,NA
+3,Data Transfer/Transmission/Cloud Connectivity-SA/Positive,15,2,13,5,1498,0.13333333333333333,0.2857142857142857,0.7142857142857143,0.8666666666666667
+4,Data Transfer/Transmission/Cloud Connectivity-SA/Negative,12,6,6,0,1506,0.5,1.0,0.0,0.5
+5,Data Transfer/Transmission/Cloud Connectivity-SA/Neutral,12,7,5,8,1498,0.5833333333333334,0.4666666666666667,0.5333333333333333,0.4166666666666667
+6,Data Transfer/Transmission/Wireless Connectivity-SA/Positive,45,10,35,12,1461,0.2222222222222222,0.45454545454545453,0.5454545454545454,0.7777777777777778
+7,Data Transfer/Transmission/Wireless Connectivity-SA/Negative,94,40,54,18,1406,0.425531914893617,0.6896551724137931,0.3103448275862069,0.574468085106383
+8,Data Transfer/Transmission/Wireless Connectivity-SA/Neutral,100,60,40,63,1355,0.6,0.4878048780487805,0.5121951219512195,0.4
+9,Data Transfer/Transmission/Wireless Setup-SA/Positive,60,41,19,13,1445,0.6833333333333333,0.7592592592592593,0.24074074074074073,0.31666666666666665
+10,Data Transfer/Transmission/Wireless Setup-SA/Negative,27,5,22,9,1482,0.18518518518518517,0.35714285714285715,0.6428571428571429,0.8148148148148148
+11,Data Transfer/Transmission/Wireless Setup-SA/Neutral,100,42,58,20,1398,0.42,0.6774193548387096,0.3225806451612903,0.58
+12,Data Transfer/Transmission/Data Transfer Error-SA/Positive,0,0,0,0,1518,NA,NA,NA,NA
+13,Data Transfer/Transmission/Data Transfer Error-SA/Negative,19,3,16,13,1486,0.15789473684210525,0.1875,0.8125,0.8421052631578947
+14,Data Transfer/Transmission/Data Transfer Error-SA/Neutral,1,0,1,0,1517,NA,NA,NA,NA
+15,Body/Design/Ergonomics -SA/Positive,4,0,4,0,1514,NA,NA,NA,NA
+16,Body/Design/Ergonomics -SA/Negative,5,1,4,1,1512,0.2,0.5,0.5,0.8
+17,Body/Design/Ergonomics -SA/Neutral,3,0,3,0,1515,NA,NA,NA,NA
+18,Overall,501,217,284,162,26661,0.43313373253493015,0.5725593667546174,0.42744063324538256,0.5668662674650699

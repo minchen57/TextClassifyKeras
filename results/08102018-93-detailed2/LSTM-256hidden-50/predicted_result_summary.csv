@@ -1,0 +1,95 @@
+,subtopic,TotalGroundTruth,YesYes,YesNo,NoYes,NoNo,Recall,Precision,FalsePositive%,FalseNegative%
+0,Data Transfer/Transmission/Wireless Range-SA,4,0,4,0,1514,NA,NA,NA,NA
+1,Data Transfer/Transmission/Cloud Connectivity-SA,39,0,39,0,1479,NA,NA,NA,NA
+2,Data Transfer/Transmission/Wireless Connectivity-SA,235,136,99,32,1251,0.5787234042553191,0.8095238095238095,0.19047619047619047,0.42127659574468085
+3,Data Transfer/Transmission/Wireless Setup-SA,186,103,83,7,1325,0.553763440860215,0.9363636363636364,0.06363636363636363,0.44623655913978494
+4,Data Transfer/Transmission/Data Transfer Error-SA,20,0,20,0,1498,NA,NA,NA,NA
+5,Body/Design/Ergonomics -SA,12,0,12,0,1506,NA,NA,NA,NA
+6,Body/Design/I/O Port(s)-SA,1,0,1,0,1517,NA,NA,NA,NA
+7,Body/Design/Size-SA,52,0,52,0,1466,NA,NA,NA,NA
+8,Body/Design/Weight-SA,9,0,9,0,1509,NA,NA,NA,NA
+9,Body/Design/Controls/Buttons-SA,6,0,6,0,1512,NA,NA,NA,NA
+10,Body/Design/Power On/Off-SA,8,0,8,0,1510,NA,NA,NA,NA
+11,Body/Design/Initialization Speed-SA,72,7,65,1,1445,0.09722222222222222,0.875,0.125,0.9027777777777778
+12,Body/Design/Build Quality-SA,67,0,67,0,1451,NA,NA,NA,NA
+13,Body/Design/Audible Noise-SA,103,0,103,0,1415,NA,NA,NA,NA
+14,Body/Design/Indicator Light-SA,6,0,6,0,1512,NA,NA,NA,NA
+15,Body/Design/Unit Locks Up-SA,4,0,4,0,1514,NA,NA,NA,NA
+16,OS Compatibility/Android Compatibility-SA,5,0,5,0,1513,NA,NA,NA,NA
+17,OS Compatibility/iOS Compatibility-SA,28,5,23,0,1490,0.17857142857142858,1.0,0.0,0.8214285714285714
+18,OS Compatibility/Mac Compatibility-SA,65,21,44,28,1425,0.3230769230769231,0.42857142857142855,0.5714285714285714,0.676923076923077
+19,OS Compatibility/Windows Compatibility-SA,125,99,26,75,1318,0.792,0.5689655172413793,0.43103448275862066,0.208
+20,OS Compatibility/Other OS Compatibility-SA,6,0,6,0,1512,NA,NA,NA,NA
+21,OS Compatibility/Windows Mobile Compatibility-SA,0,0,0,0,1518,NA,NA,NA,NA
+22,OS Compatibility/Non-Specific O.S. Compatibility-SA,3,0,3,0,1515,NA,NA,NA,NA
+23,Print Quality/Color Print Quality-SA,56,0,56,0,1462,NA,NA,NA,NA
+24,Print Quality/Overall Print Quality-SA,93,0,93,0,1425,NA,NA,NA,NA
+25,Print Quality/Monochrome Print Quality-SA,25,1,24,1,1492,0.04,0.5,0.5,0.96
+26,Print Quality/Print Speed-SA,56,1,55,0,1462,0.017857142857142856,1.0,0.0,0.9821428571428571
+27,Print Quality/Borders/Margins-SA,4,0,4,0,1514,NA,NA,NA,NA
+28,Print Quality/Duplex Printing-SA,19,0,19,0,1499,NA,NA,NA,NA
+29,Print Quality/Print Banding-SA,1,0,1,0,1517,NA,NA,NA,NA
+30,Print Quality/Print Permanence-SA,0,0,0,0,1518,NA,NA,NA,NA
+31,Error Messages/Busy Message-SA,1,0,1,0,1517,NA,NA,NA,NA
+32,Error Messages/Error 1007-SA,3,0,3,0,1515,NA,NA,NA,NA
+33,Error Messages/Error 1008-SA,3,0,3,0,1515,NA,NA,NA,NA
+34,Error Messages/Error 1403-SA,1,0,1,0,1517,NA,NA,NA,NA
+35,Error Messages/Error 2500-SA,2,0,2,0,1516,NA,NA,NA,NA
+36,Error Messages/Error 5011-SA,2,0,2,0,1516,NA,NA,NA,NA
+37,Error Messages/Error 5100-SA,0,0,0,0,1518,NA,NA,NA,NA
+38,Error Messages/Error 6000-SA,4,0,4,0,1514,NA,NA,NA,NA
+39,Error Messages/Error 6001-SA,2,0,2,0,1516,NA,NA,NA,NA
+40,Error Messages/Error B200-SA,15,0,15,0,1503,NA,NA,NA,NA
+41,Error Messages/Error U052-SA,0,0,0,0,1518,NA,NA,NA,NA
+42,Error Messages/Memory Card Error-SA,0,0,0,0,1518,NA,NA,NA,NA
+43,Error Messages/Non-specific/Unknown-SA,64,0,64,1,1453,0.0,0.0,1.0,1.0
+44,Error Messages/Scanner Error-SA,6,0,6,0,1512,NA,NA,NA,NA
+45,Error Messages/Unrecognized Ink Tank-SA,1,0,1,0,1517,NA,NA,NA,NA
+46,Error Messages/Paper Jam-SA,38,0,38,0,1480,NA,NA,NA,NA
+47,Ink/Ink Consumption-SA,85,12,73,11,1422,0.1411764705882353,0.5217391304347826,0.4782608695652174,0.8588235294117647
+48,Ink/Clogged Nozzles-SA,5,0,5,0,1513,NA,NA,NA,NA
+49,Ink/Bad Chip-SA,2,0,2,0,1516,NA,NA,NA,NA
+50,Ink/Ink Tank Capacity-SA,12,0,12,0,1506,NA,NA,NA,NA
+51,Ink/Ink Level Warning-SA,9,0,9,0,1509,NA,NA,NA,NA
+52,Printing Media/Paper Feed-SA,89,36,53,22,1407,0.4044943820224719,0.6206896551724138,0.3793103448275862,0.5955056179775281
+53,Printing Media/CD/DVD Printing-SA,20,0,20,0,1498,NA,NA,NA,NA
+54,Printing Media/Media Size-SA,4,0,4,0,1514,NA,NA,NA,NA
+55,Retail Experience/Selling Price-SA,109,30,79,2,1407,0.27522935779816515,0.9375,0.0625,0.7247706422018348
+56,Customer Care/Agent Follow Up-SA,2,0,2,0,1516,NA,NA,NA,NA
+57,Customer Care/Agent Knowledge-SA,14,0,14,0,1504,NA,NA,NA,NA
+58,Customer Care/Email Support-SA,4,0,4,0,1514,NA,NA,NA,NA
+59,Customer Care/Hours of Operation-SA,3,0,3,0,1515,NA,NA,NA,NA
+60,Customer Care/Warranty Terms-SA,1,0,1,0,1517,NA,NA,NA,NA
+61,Customer Care/Agent Courtesy-SA,6,0,6,0,1512,NA,NA,NA,NA
+62,Customer Care/Non-Canon Repair Service-SA,0,0,0,0,1518,NA,NA,NA,NA
+63,Customer Care/Non-Canon Support Service-SA,1,0,1,0,1517,NA,NA,NA,NA
+64,Customer Care/Repair Cost Quote/Fee-SA,1,0,1,0,1517,NA,NA,NA,NA
+65,Customer Care/Repair Shipping-SA,0,0,0,0,1518,NA,NA,NA,NA
+66,Customer Care/Repair Turnaround Time-SA,0,0,0,0,1518,NA,NA,NA,NA
+67,Customer Care/Canon Direct Customer Service-SA,1,0,1,0,1517,NA,NA,NA,NA
+68,Customer Care/Service Replacement System-SA,0,0,0,0,1518,NA,NA,NA,NA
+69,Customer Care/3rd Party Extended-SA,1,0,1,0,1517,NA,NA,NA,NA
+70,Customer Care/Loyalty Program-SA,1,0,1,0,1517,NA,NA,NA,NA
+71,Customer Care/Overall Customer Service-SA,54,1,53,1,1463,0.018518518518518517,0.5,0.5,0.9814814814814815
+72,Software/3rd Party Software-SA,2,0,2,0,1516,NA,NA,NA,NA
+73,Software/Driver Performance-SA,12,0,12,0,1506,NA,NA,NA,NA
+74,Product Documentation/Documentation Clarity-SA,16,0,16,0,1502,NA,NA,NA,NA
+75,Product Documentation/Documentation Format-SA,9,0,9,0,1509,NA,NA,NA,NA
+76,Feature Request/Paper Feed Options-SA,20,0,20,0,1498,NA,NA,NA,NA
+77,Feature Request/Touchscreen-SA,1,0,1,0,1517,NA,NA,NA,NA
+78,Feature Request/Photo Editing Function-SA,0,0,0,0,1518,NA,NA,NA,NA
+79,Settings & Modes/Sleep/Power Save Mode-SA,4,0,4,0,1514,NA,NA,NA,NA
+80,LCD/LCD Dead-SA,0,0,0,0,1518,NA,NA,NA,NA
+81,LCD/LCD Visibility-SA,1,0,1,0,1517,NA,NA,NA,NA
+82,Software Function/Usability: Interface-SA,0,0,0,0,1518,NA,NA,NA,NA
+83,Software Function/Usability: Workflow-SA,1,0,1,0,1517,NA,NA,NA,NA
+84,Accessories/3rd Party Accessories-SA,1,0,1,0,1517,NA,NA,NA,NA
+85,Software Installation/Android Installation-SA,1,0,1,0,1517,NA,NA,NA,NA
+86,Software Installation/PC Installation-SA,1,0,1,0,1517,NA,NA,NA,NA
+87,Fax/Scan Function/Fax/Scan Operation-SA,96,0,96,0,1422,NA,NA,NA,NA
+88,Fax/Scan Function/Fax/Scan Quality-SA,7,0,7,0,1511,NA,NA,NA,NA
+89,Fax/Scan Function/Fax/Scan Speed-SA,4,0,4,0,1514,NA,NA,NA,NA
+90,Safety/Burnt Smell-SA,0,0,0,0,1518,NA,NA,NA,NA
+91,Memory/Media/Media Compatibility-SA,0,0,0,0,1518,NA,NA,NA,NA
+92,Features & Functions/Menu Functions-SA,57,0,57,0,1461,NA,NA,NA,NA
+93,Overall,2109,452,1657,181,138884,0.21431958274063537,0.7140600315955766,0.2859399684044234,0.7856804172593647
